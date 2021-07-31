@@ -4,7 +4,7 @@ from scraper import scrape_movie
 
 bot_token = "1894457392:AAHJUn071NRcla4TzTqePZoy-YB_b4EiMSs"
 
-keys = ["title", "rating", "duration","summary","casts","genres"]
+keys = ["title", "rating", "directors","summary","stars","categories"]
 
 
 def start(update, context):
@@ -21,18 +21,19 @@ def search_movie(update, context):
     movie_name = update.message.text
     update.message.reply_text("You searched for "+movie_name)
     print(movie_name)
-    movie_info = scrape_movie(movie_name=movie_name)
+    movie_info = scrape_movie(movie_name)
     for key in keys:
         # update.message.reply_text(
         #     "The "+key+" of the movie is "+movie_info[key])
         if type(movie_info[key]) is list:
-            result = "The "+key+" are"
+            result = " The "+key+" are "
             for stuff in movie_info[key]:
                 result+=stuff+","
+            
             update.message.reply_text(result)    
         else:
             update.message.reply_text(
-                    "The "+key+" of the movie is "+movie_info[key])
+                    " The "+key+" of the movie is : "+movie_info[key])
 
     update.message.reply_text("There you go!")
 
